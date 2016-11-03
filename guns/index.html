@@ -7,8 +7,33 @@
     <script type="text/javascript" src="/_scripts/GunCatalog.js"></script>
     <script type="text/javascript" async>
         document.addEventListener("DOMContentLoaded", () => {
-            Server.getGuns()
-                    .then(guns => new GunCatalog().addAll(guns));
+//            Server.getGuns()
+//            //    .then(guns => new GunCatalog().addAll(guns));
+//                .then(response => {
+//                    if (response.status !== 200) {
+//                        console.log('Looks like there was a problem. Status Code: ' +
+//                            response.status);
+//                        return;
+//                    }
+//
+//                    // Examine the text in the response
+//                    response.json().then(guns => new GunCatalog().addAll(guns));
+//
+//                })
+//                .catch(function (err) {
+//                    console.log('Fetch Error :-S', err);
+//                });
+
+            const tableHeader1 = document.querySelector("th.first");
+            tableHeader1.addEventListener("click", evt => {
+                console.log("th.first clicked");
+            });
+
+            const table = document.querySelector("#Guns");
+            table.addEventListener("click", evt => {
+                console.log("#Guns clicked");
+            }, false);
+
         });
     </script>
 </head>
@@ -17,7 +42,7 @@
 
 <table id="Guns" class="bordered">
     <tr>
-        <th>Название модели</th>
+        <th class="first">Название модели</th>
         <th>Калибр</th>
     </tr>
 </table>
