@@ -31,9 +31,17 @@
             }, false);
         }, true);
 
-        ((x,y=6) => {
-            console.log(`x + y = ${x + y}`);
-        })(1, 9);
+        const getSum = ((x,y=6) => {
+            return () => console.log(`x + y = ${x + y}`);
+        })(1, 10);
+
+        // ...
+
+        console.log(`секундочку!..`);
+
+        setTimeout(getSum, 1000);
+
+        //...
 
     </script>
 </head>
