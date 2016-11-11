@@ -6,42 +6,72 @@
     <!--<script type="text/javascript" src="/_scripts/Server.js"></script>-->
     <script type="text/javascript" src="/_scripts/GunCatalog.js"></script>
     <script type="text/javascript" async>
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch('/webapi/gun.json')
-            //    .then(guns => new GunCatalog().addAll(guns));
-                .then(response => {
-                    if (response.status === 200)
-                        response.json().then(guns => new GunCatalog().addAll(guns));
-                    else
-                        console.log(`Looks like there was a problem. Status Code: ${response.status}`);
-                });
-        });
+        //        document.addEventListener("DOMContentLoaded", () => {
+        //            fetch('/webapi/gun.json')
+        //            //    .then(guns => new GunCatalog().addAll(guns));
+        //                .then(response => {
+        //                    if (response.status === 200)
+        //                        response.json().then(guns => new GunCatalog().addAll(guns));
+        //                    else
+        //                        console.log(`Looks like there was a problem. Status Code: ${response.status}`);
+        //                });
+        //        });
+        //
+        //        document.addEventListener("DOMContentLoaded", () => {
+        //            const tableHeader1 = document.querySelector("th.first");
+        //            tableHeader1.addEventListener("click", evt => {
+        //                console.log("th.first clicked");
+        //            });
+        //
+        //            const table = document.querySelector("#Guns");
+        //            table.addEventListener("click", evt => {
+        //                evt.stopPropagation();
+        //                evt.preventDefault();
+        //                console.log("#Guns clicked");
+        //            }, false);
+        //        }, true);
+        //
+        //        const getSum = ((x,y=6) => {
+        //            return () => console.log(`x + y = ${x + y}`);
+        //        })(1, 10);
+        //
+        //        // ...
+        //
+        //        console.log(`секундочку!..`);
+        //
+        //        setTimeout(getSum, 1000);
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const tableHeader1 = document.querySelector("th.first");
-            tableHeader1.addEventListener("click", evt => {
-                console.log("th.first clicked");
-            });
+        //...
 
-            const table = document.querySelector("#Guns");
-            table.addEventListener("click", evt => {
-                evt.stopPropagation();
-                evt.preventDefault();
-                console.log("#Guns clicked");
-            }, false);
-        }, true);
+        const conf = {
+            username: "batman",
+            first: "Bruce",
+            last: "Wayne"
+        };
+        addPerson(conf);
 
-        const getSum = ((x,y=6) => {
-            return () => console.log(`x + y = ${x + y}`);
-        })(1, 10);
+
+        function addPerson({username, first, last}) {
+            console.log(`username=${username}; first=${first}; last=${last}`);
+        }
+
+        function foo(x, y, z) {
+
+        }
+
+        // ..
+
+        let foox = (y, z) => foo(1, y, z);
 
         // ...
 
-        console.log(`секундочку!..`);
+        let fooxy = z => foox(2, z);
 
-        setTimeout(getSum, 1000);
+        // ...
 
-        //...
+        let a = fooxy(3);
+
+
 
     </script>
 </head>
