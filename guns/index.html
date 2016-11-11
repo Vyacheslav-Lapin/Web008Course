@@ -4,85 +4,44 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="/_styles/style.css"/>
     <!--<script type="text/javascript" src="/_scripts/Server.js"></script>-->
-    <script type="text/javascript" src="/_scripts/GunCatalog.js"></script>
+    <!--<script type="text/javascript" src="/_scripts/GunCatalog.js"></script>-->
     <script type="text/javascript" async>
-        //        document.addEventListener("DOMContentLoaded", () => {
-        //            fetch('/webapi/gun.json')
-        //            //    .then(guns => new GunCatalog().addAll(guns));
-        //                .then(response => {
-        //                    if (response.status === 200)
-        //                        response.json().then(guns => new GunCatalog().addAll(guns));
-        //                    else
-        //                        console.log(`Looks like there was a problem. Status Code: ${response.status}`);
-        //                });
-        //        });
-        //
-        //        document.addEventListener("DOMContentLoaded", () => {
-        //            const tableHeader1 = document.querySelector("th.first");
-        //            tableHeader1.addEventListener("click", evt => {
-        //                console.log("th.first clicked");
-        //            });
-        //
-        //            const table = document.querySelector("#Guns");
-        //            table.addEventListener("click", evt => {
-        //                evt.stopPropagation();
-        //                evt.preventDefault();
-        //                console.log("#Guns clicked");
-        //            }, false);
-        //        }, true);
-        //
-        //        const getSum = ((x,y=6) => {
-        //            return () => console.log(`x + y = ${x + y}`);
-        //        })(1, 10);
-        //
-        //        // ...
-        //
-        //        console.log(`секундочку!..`);
-        //
-        //        setTimeout(getSum, 1000);
 
-        //...
-
-        const conf = {
-            username: "batman",
-            first: "Bruce",
-            last: "Wayne"
+        const mypackage = {};
+        //        mypackage.mysubpackage = {};
+        Object.defineProperty(mypackage, 'mysubpacage', {
+            configurable: false,
+            writable: false,
+            value: {}
+        });
+        mypackage.mysubpacage.Constr1 = function (x, y=5) {
+            this.x = x;
+            this.y = y;
         };
-        addPerson(conf);
 
+        // import
+        const mysubpacage = mypackage.mysubpacage;
+        const Constr1 = mysubpacage.Constr1;
+        const constr1 = new Constr1(1);
+        console.log(constr1.x, constr1.y);
 
-        function addPerson({username, first, last}) {
-            console.log(`username=${username}; first=${first}; last=${last}`);
-        }
-
-        function foo(x, y, z) {
-
-        }
-
-        // ..
-
-        let foox = (y, z) => foo(1, y, z);
-
-        // ...
-
-        let fooxy = z => foox(2, z);
-
-        // ...
-
-        let a = fooxy(3);
-
+        myobj
+            .method1("hello")
+            .method2()
+            .method3("world")
+            .method4();
 
 
     </script>
 </head>
 <body>
-<h1>Имеющиеся в продаже товары:</h1>
+<!--<h1>Имеющиеся в продаже товары:</h1>-->
 
-<table id="Guns" class="bordered">
-    <tr>
-        <th class="first">Название модели</th>
-        <th>Калибр</th>
-    </tr>
-</table>
+<!--<table id="Guns" class="bordered">-->
+<!--<tr>-->
+<!--<th class="first">Название модели</th>-->
+<!--<th>Калибр</th>-->
+<!--</tr>-->
+<!--</table>-->
 </body>
 </html>
