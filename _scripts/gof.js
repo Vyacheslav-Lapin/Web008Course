@@ -180,9 +180,37 @@ class ArrayIterator {
 const iterator = new ArrayIterator(1, 2, 3);
 
 // console.log(
-iterator
-    .filter(x => x % 2 !== 0)
-    .map(x => x + 1)
-    .flatMap(x => [x - 1, x, x + 1])
-    .forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3, 3, 4, 5
-// .reduce(0, (x, y) => x + y));
+// iterator
+//     .filter(x => x % 2 !== 0)
+//     .map(x => x + 1)
+//     .flatMap(x => [x - 1, x, x + 1])
+//     .forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3, 3, 4, 5
+// // .reduce(0, (x, y) => x + y));
+
+function* foo(/* args */) {
+    /* some logic */
+    yield 'bar one';
+    /* some logic */
+    yield 'bar two';
+    /* some logic */
+    yield 'bar three';
+}
+
+for (let foobar of foo())
+    console.log(foobar);
+
+let fibonacci = {
+    *[Symbol.iterator]() {
+        let pre = 0, cur = 1;
+        while (true) {
+            [ pre, cur ] = [ cur, pre + cur ];
+            yield cur;
+        }
+    }
+};
+
+for (let n of fibonacci) {
+    if (n > 1000)
+        break;
+    console.log(n)
+}
