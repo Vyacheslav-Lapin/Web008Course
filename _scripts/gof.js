@@ -131,6 +131,24 @@ ArrayIterator.prototype.map = function (transformer) {
 
 /**
  * @template U
+ * @param {function(T):boolean} filter
+ * @returns ArrayIterator<U>
+ */
+ArrayIterator.prototype.filter = function (filter) {
+    const result = new ArrayIterator();
+    const array = [];
+
+    this.forEach(iteratorElement => {
+        if (filter(iteratorElement))
+            array.push(iteratorElement);
+    });
+
+    result.array = array;
+    return result;
+};
+
+/**
+ * @template U
  * @param {function(T):Array<U>} transformer
  * @returns ArrayIterator<U>
  */
@@ -161,6 +179,7 @@ const iterator = new ArrayIterator(1, 2, 3);
 
 // console.log(
     iterator
+        .filter(x => x % 2 !== 0)
         .map(x => x + 1)
         .flatMap(x => [x-1, x, x+1])
         .forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3, 2, 3, 4, 3, 4, 5
