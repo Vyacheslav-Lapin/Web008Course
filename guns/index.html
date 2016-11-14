@@ -5,51 +5,52 @@
     <link rel="stylesheet" href="/_styles/style.css"/>
     <!--<script type="text/javascript" src="/_scripts/Server.js"></script>-->
     <!--<script type="text/javascript" src="/_scripts/GunCatalog.js"></script>-->
-    <script type="text/javascript" async>
+    <!--<script type="text/javascript" async>-->
 
-        const mypackage = {};
-        //        mypackage.mysubpackage = {};
-        Object.defineProperty(mypackage, 'mysubpacage', {
-            configurable: false,
-            writable: false,
-            value: {}
-        });
-        mypackage.mysubpacage.Constr1 = function (x, y = 5) {
-            this.x = x;
-            this.y = y;
-        };
+        <!--const mypackage = {};-->
+        <!--//        mypackage.mysubpackage = {};-->
+        <!--Object.defineProperty(mypackage, 'mysubpacage', {-->
+            <!--configurable: false,-->
+            <!--writable: false,-->
+            <!--value: {}-->
+        <!--});-->
+        <!--mypackage.mysubpacage.Constr1 = function (x, y = 5) {-->
+            <!--this.x = x;-->
+            <!--this.y = y;-->
+        <!--};-->
 
-        // import
-        const mysubpacage = mypackage.mysubpacage;
-        const Constr1 = mysubpacage.Constr1;
+        <!--// import-->
+        <!--const mysubpacage = mypackage.mysubpacage;-->
+        <!--const Constr1 = mysubpacage.Constr1;-->
 
-        function Constr2(x, y = 8, z = 50) {
-            Constr1.call(this, x, y);
-            this.z = z;
-        }
-        Constr2.prototype = Object.create(Constr1.prototype, {
-            constructor: {value: Constr2},
-            showConstructorName: {
-                value: function() {
-                    console.log(this.constructor.name);
-                }
-            }
-        });
+        <!--function Constr2(x, y = 8, z = 50) {-->
+            <!--Constr1.call(this, x, y);-->
+            <!--this.z = z;-->
+        <!--}-->
+        <!--Constr2.prototype = Object.create(Constr1.prototype, {-->
+            <!--constructor: {value: Constr2},-->
+            <!--showConstructorName: {-->
+                <!--value: function() {-->
+                    <!--console.log(this.constructor.name);-->
+                <!--}-->
+            <!--}-->
+        <!--});-->
 
-//        Constr2.prototype.showConstructorName = function() {
-//
-//        };
+<!--//        Constr2.prototype.showConstructorName = function() {-->
+<!--//-->
+<!--//        };-->
 
-        const constr2 = new Constr2(1);
-        console.log(constr2.x, constr2.y, constr2.z);
-        console.log(constr2.constructor.name);
-        addEventListener("DOMContentLoaded",
-            constr2.showConstructorName
-                .bind(constr2),
-            true);
+        <!--const constr2 = new Constr2(1);-->
+        <!--console.log(constr2.x, constr2.y, constr2.z);-->
+        <!--console.log(constr2.constructor.name);-->
+        <!--addEventListener("DOMContentLoaded",-->
+            <!--constr2.showConstructorName-->
+                <!--.bind(constr2),-->
+            <!--true);-->
 
 
-    </script>
+    <!--</script>-->
+    <script src="/_scripts/gof.js"></script>
 </head>
 <body>
 <!--<h1>Имеющиеся в продаже товары:</h1>-->
