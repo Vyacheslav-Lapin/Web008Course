@@ -14,7 +14,7 @@
             writable: false,
             value: {}
         });
-        mypackage.mysubpacage.Constr1 = function (x, y=5) {
+        mypackage.mysubpacage.Constr1 = function (x, y = 5) {
             this.x = x;
             this.y = y;
         };
@@ -22,14 +22,31 @@
         // import
         const mysubpacage = mypackage.mysubpacage;
         const Constr1 = mysubpacage.Constr1;
-        const constr1 = new Constr1(1);
-        console.log(constr1.x, constr1.y);
 
-        myobj
-            .method1("hello")
-            .method2()
-            .method3("world")
-            .method4();
+        function Constr2(x, y = 8, z = 50) {
+            Constr1.call(this, x, y);
+            this.z = z;
+        }
+        Constr2.prototype = Object.create(Constr1.prototype, {
+            constructor: {value: Constr2},
+            showConstructorName: {
+                value: function() {
+                    console.log(this.constructor.name);
+                }
+            }
+        });
+
+//        Constr2.prototype.showConstructorName = function() {
+//
+//        };
+
+        const constr2 = new Constr2(1);
+        console.log(constr2.x, constr2.y, constr2.z);
+        console.log(constr2.constructor.name);
+        addEventListener("DOMContentLoaded",
+            constr2.showConstructorName
+                .bind(constr2),
+            true);
 
 
     </script>
