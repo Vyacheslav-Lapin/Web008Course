@@ -101,86 +101,88 @@ const c1 = C.getC();
  * @param {T} args...
  * @constructor
  */
-function ArrayIterator(...args) {
-    this.array = args;
+class ArrayIterator {
+    constructor(...args) {
+        this.array = args;
+    }
+
+    /**
+     * @param {function(T)} doWith
+     */
+    forEach(doWith) {
+        let index = 0;
+        while (index < this.array.length)
+            doWith(this.array[index++]);
+    }
+
+    /**
+     * @template U
+     * @param {function(T):U} transformer
+     * @returns ArrayIterator<U>
+     */
+    map(transformer) {
+        const result = new ArrayIterator();
+        const array = [];
+
+        this.forEach(iteratorElement => array.push(transformer(iteratorElement)));
+
+        result.array = array;
+        return result;
+    };
+
+    /**
+     * @template U
+     * @param {function(T):boolean} filter
+     * @returns ArrayIterator<U>
+     */
+    filter(filter) {
+        const result = new ArrayIterator();
+        const array = [];
+
+        this.forEach(iteratorElement => {
+            if (filter(iteratorElement))
+                array.push(iteratorElement);
+        });
+
+        result.array = array;
+        return result;
+    };
+
+    /**
+     * @template U
+     * @param {function(T):Array<U>} transformer
+     * @returns ArrayIterator<U>
+     */
+    flatMap(transformer) {
+        const result = new ArrayIterator();
+        const array = [];
+
+        this.forEach(iteratorElement => array.push.apply(array, transformer(iteratorElement)));
+
+        result.array = array;
+        return result;
+    };
+
+    /**
+     * @template U
+     * @param {U} initValue
+     * @param {function(U, T): U} reducer
+     */
+    reduce(initValue, reducer) {
+        let result = initValue;
+
+        this.forEach(iteratorElement => result = reducer(result, iteratorElement));
+
+        return result;
+    };
 }
-
-/**
- * @param {function(T)} doWith
- */
-ArrayIterator.prototype.forEach = function (doWith) {
-    let index = 0;
-    while (index < this.array.length)
-        doWith(this.array[index++]);
-};
-
-/**
- * @template U
- * @param {function(T):U} transformer
- * @returns ArrayIterator<U>
- */
-ArrayIterator.prototype.map = function (transformer) {
-    const result = new ArrayIterator();
-    const array = [];
-
-    this.forEach(iteratorElement => array.push(transformer(iteratorElement)));
-
-    result.array = array;
-    return result;
-};
-
-/**
- * @template U
- * @param {function(T):boolean} filter
- * @returns ArrayIterator<U>
- */
-ArrayIterator.prototype.filter = function (filter) {
-    const result = new ArrayIterator();
-    const array = [];
-
-    this.forEach(iteratorElement => {
-        if (filter(iteratorElement))
-            array.push(iteratorElement);
-    });
-
-    result.array = array;
-    return result;
-};
-
-/**
- * @template U
- * @param {function(T):Array<U>} transformer
- * @returns ArrayIterator<U>
- */
-ArrayIterator.prototype.flatMap = function (transformer) {
-    const result = new ArrayIterator();
-    const array = [];
-
-    this.forEach(iteratorElement => array.push.apply(array, transformer(iteratorElement)));
-
-    result.array = array;
-    return result;
-};
-
-/**
- * @template U
- * @param {U} initValue
- * @param {function(U, T): U} reducer
- */
-ArrayIterator.prototype.reduce = function (initValue, reducer) {
-    let result = initValue;
-
-    this.forEach(iteratorElement => result = reducer(result, iteratorElement));
-
-    return result;
-};
 
 const iterator = new ArrayIterator(1, 2, 3);
 
 // console.log(
-    iterator
-        .filter(x => x % 2 !== 0)
-        .map(x => x + 1)
-        .flatMap(x => [x-1, x, x+1])
-        .forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3, 2, 3, 4, 3, 4, 5
-        // .reduce(0, (x, y) => x + y));
+iterator
+    .filter(x => x % 2 !== 0)
+    .map(x => x + 1)
+    .flatMap(x => [x - 1, x, x + 1])
+    .forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3, 3, 4, 5
+// .reduce(0, (x, y) => x + y));
