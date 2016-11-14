@@ -99,14 +99,11 @@ console.log(C.name); //C
 const iterator = {
     array: [1,2,3],
     index: 0,
-    next: function () {
-        return this.array[this.index++];
+    forEach: function (doWith) {
+        while (this.index < this.array.length)
+            doWith(this.array[this.index++]);
     },
-    // remove: function () {
-    //
-    // }
+
 };
 
-let iteratorElement;
-while ((iteratorElement = iterator.next()) !== undefined)
-    console.log(iteratorElement); // 1, 2, 3
+iterator.forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3
