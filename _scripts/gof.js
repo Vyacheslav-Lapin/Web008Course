@@ -9,8 +9,8 @@ const a = {
     },
 };
 
-a.method1();
-a.method2();
+// a.method1();
+// a.method2();
 
 const B = (function () {
 
@@ -36,9 +36,9 @@ const B = (function () {
 
 const b = new B();
 const b1 = new B();
-console.log(b.method3(5));
-// ...
-console.log(b === b1); // true
+// console.log(b.method3(5));
+// // ...
+// console.log(b === b1); // true
 
 const C = (() => {
 
@@ -90,20 +90,78 @@ const C = (() => {
 const c = C.getC();
 const c1 = C.getC();
 
-console.log(c === c1); // false
-console.log(c.equals(c1)); // true
-console.log(c instanceof C); // true
-console.log(c1 instanceof C); //true
-console.log(C.name); //C
+// console.log(c === c1); // false
+// console.log(c.equals(c1)); // true
+// console.log(c instanceof C); // true
+// console.log(c1 instanceof C); //true
+// console.log(C.name); //C
 
-const iterator = {
-    array: [1,2,3],
-    index: 0,
-    forEach: function (doWith) {
-        while (this.index < this.array.length)
-            doWith(this.array[this.index++]);
-    },
+/**
+ * @template T
+ * @param {T} args...
+ * @constructor
+ */
+function ArrayIterator(...args) {
+    this.array = args;
+}
 
+/**
+ * @param {function(T)} doWith
+ */
+ArrayIterator.prototype.forEach = function (doWith) {
+    let index = 0;
+    while (index < this.array.length)
+        doWith(this.array[index++]);
 };
 
-iterator.forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3
+/**
+ * @template U
+ * @param {function(T):U} transformer
+ * @returns ArrayIterator<U>
+ */
+ArrayIterator.prototype.map = function (transformer) {
+    const result = new ArrayIterator();
+    const array = [];
+
+    this.forEach(iteratorElement => array.push(transformer(iteratorElement)));
+
+    result.array = array;
+    return result;
+};
+
+/**
+ * @template U
+ * @param {function(T):Array<U>} transformer
+ * @returns ArrayIterator<U>
+ */
+ArrayIterator.prototype.flatMap = function (transformer) {
+    const result = new ArrayIterator();
+    const array = [];
+
+    this.forEach(iteratorElement => array.push.apply(array, transformer(iteratorElement)));
+
+    result.array = array;
+    return result;
+};
+
+/**
+ * @template U
+ * @param {U} initValue
+ * @param {function(U, T): U} reducer
+ */
+ArrayIterator.prototype.reduce = function (initValue, reducer) {
+    let result = initValue;
+
+    this.forEach(iteratorElement => result = reducer(result, iteratorElement));
+
+    return result;
+};
+
+const iterator = new ArrayIterator(1, 2, 3);
+
+// console.log(
+    iterator
+        .map(x => x + 1)
+        .flatMap(x => [x-1, x, x+1])
+        .forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3, 2, 3, 4, 3, 4, 5
+        // .reduce(0, (x, y) => x + y));
