@@ -274,11 +274,9 @@ class Validator {
         this.messages = [];
         Object.keys(data)
             .filter(key => data.hasOwnProperty(key))
-
             .forEach(key => {
                 type = this.config[key];
                 if (!type) return; // проверка не требуется
-
                 checker = this.constructor.types[type];
                 if (!checker) // ай-яй-яй
                     throw {
