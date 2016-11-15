@@ -217,48 +217,46 @@ function* foo(/* args */) {
 
 class Sale {
     constructor(price) {
-        this.price = price || 100;
+        this._price = price || 100;
+        this.decorators = [];
     }
 
-    getPrice() {
-        return this.price;
+    get price() {
+        return this.decorators
+            .reduce((price, decorator) => Sale.decorators[decorator].getPrice(price), this._price);
     };
 
     decorate(decorator) {
-        return Object.create(this, {
-            getPrice: {
-                value: this.constructor.decorators[decorator]['getPrice']
-            }
-        });
+        // todo: check existence in Sale.decorators
+        this.decorators.push(decorator);
     };
 }
 
 Sale.decorators = {
     fedtax: {
-        getPrice: function () {
-            return Object.getPrototypeOf(this).getPrice() * 1.05;
+        getPrice: function (prise) {
+            return prise * 1.05;
         }
     },
     quebec: {
-        getPrice: function () {
-            return Object.getPrototypeOf(this).getPrice() * 1.075;
+        getPrice: function (prise) {
+            return prise * 1.075;
         }
     },
     money: {
-        getPrice: function () {
-            console.log(this);
-            return `$ ${Object.getPrototypeOf(this).getPrice().toFixed(2)}`;
+        getPrice: function (prise) {
+            return `$ ${prise.toFixed(2)}`;
         }
     },
     // cdn: {
-    //     getPrice: function () {
-    //         return `CDN$ ${Object.getPrototypeOf(this).getPrice().toFixed(2)}`;
+    //     getPrice: function (prise) {
+    //         return `CDN$ ${prise.toFixed(2)}`;
     //     }
     // }
 };
 
-let sale = new Sale(100); // цена 100 долларов
-sale = sale.decorate(`fedtax`); // добавить федеральный налог
-sale = sale.decorate(`quebec`); // добавить местный налог
-sale = sale.decorate(`money`); // форматировать как денежную сумму
-console.log(sale.getPrice());
+const sale = new Sale(100); // цена 100 долларов
+sale.decorate(`fedtax`); // добавить федеральный налог
+sale.decorate(`quebec`); // добавить местный налог
+sale.decorate(`money`); // форматировать как денежную сумму
+console.log(sale.price);
