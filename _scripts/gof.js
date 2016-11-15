@@ -259,4 +259,146 @@ const sale = new Sale(100); // цена 100 долларов
 sale.decorate(`fedtax`); // добавить федеральный налог
 sale.decorate(`quebec`); // добавить местный налог
 sale.decorate(`money`); // форматировать как денежную сумму
-console.log(sale.price);
+// console.log(sale.price);
+
+class Validator {
+    constructor(config) {
+        this.config = config;
+        this.messages = [];
+    }
+
+    validate(data) {
+        let type, checker, resultOk;
+
+        // удалить все сообщения
+        this.messages = [];
+        Object.keys(data)
+            .filter(key => data.hasOwnProperty(key))
+
+            .forEach(key => {
+                type = this.config[key];
+                if (!type) return; // проверка не требуется
+
+                checker = this.constructor.types[type];
+                if (!checker) // ай-яй-яй
+                    throw {
+                        name: `ValidationError`,
+                        message: `No handler to validate type ${type}`
+                    };
+
+                resultOk = checker.validate(data[key]);
+                if (!resultOk)
+                    this.messages.push(`Invalid value for * ${key} *, ${checker.instructions}`);
+            });
+
+        return this.hasErrors();
+    }
+
+    // вспомогательный метод
+    hasErrors() {
+        return this.messages.length !== 0;
+    }
+}
+
+Validator.types = {
+    // проверяет наличие значения
+    isNonEmpty: {
+        validate: function (value) {
+            return value !== ``;
+        },
+        instructions: `the value cannot be empty`
+    },
+    isNumber: { // проверяет, является ли значение числом
+        validate: function (value) {
+            return !isNaN(value);
+        },
+        instructions: `the value can only be a valid number, e.g. 1, 3.14 or 2010`
+    },
+    isAlphaNum: { // проверяет, содержит ли значение только буквы и цифры
+        validate: function (value) {
+            return !/[^a-z0-9]/i.test(value);
+        },
+        instructions: `the value can only contain characters and numbers, no special symbols`
+    }
+};
+
+const validator = new Validator({
+    first_name: `isNonEmpty`,
+    age: `isNumber`,
+    username: `isAlphaNum`
+});
+
+// const validator = {
+//     config: {
+//         first_name: `isNonEmpty`,
+//         age: `isNumber`,
+//         username: `isAlphaNum`
+//     },
+//
+//     messages: [],
+//
+//     validate: function (data) {
+//         let i, msg, type, checker, resultOk;
+//
+//         // удалить все сообщения
+//         this.messages = [];
+//         for (i in data) {
+//             if (data.hasOwnProperty(i)) {
+//                 type = this.config[i];
+//                 checker = this.types[type];
+//                 if (!type) {
+//                     continue; // проверка не требуется
+//                 }
+//                 if (!checker) { // ай-яй-яй
+//                     throw {
+//                         name: `ValidationError`,
+//                         message: `No handler to validate type ${type}`
+//                     };
+//                 }
+//                 resultOk = checker.validate(data[i]);
+//                 if (!resultOk) {
+//                     this.messages.push(`Invalid value for * ${i} *, ${checker.instructions}`);
+//                 }
+//             }
+//         }
+//         return this.hasErrors();
+//     },
+//
+//     // вспомогательный метод
+//     hasErrors: function () {
+//         return this.messages.length !== 0;
+//     },
+//
+//     types: {
+//         isNonEmpty: { // проверяет наличие значения
+//             validate: function (value) {
+//                 return value !== ``;
+//             },
+//             instructions: `the value cannot be empty`
+//         },
+//         isNumber: { // проверяет, является ли значение числом
+//             validate: function (value) {
+//                 return !isNaN(value);
+//             },
+//             instructions: `the value can only be a valid number, e.g. 1, 3.14 or 2010`
+//         },
+//         isAlphaNum: { // проверяет, содержит ли значение только буквы и цифры
+//             validate: function (value) {
+//                 return !/[^a-z0-9]/i.test(value);
+//             },
+//             instructions: `the value can only contain characters and numbers, no special symbols`
+//         }
+//     }
+// };
+
+const data = {
+    first_name: `Super`,
+    last_name: `Man`,
+    age: `unknown`,
+    username: `o_O`
+};
+
+validator.validate(data);
+if (validator.hasErrors()) {
+    console.log(validator.messages.join(`\n`));
+}
