@@ -196,21 +196,69 @@ function* foo(/* args */) {
     yield 'bar three';
 }
 
-for (let foobar of foo())
-    console.log(foobar);
+// for (let foobar of foo())
+//     console.log(foobar);
+//
+// let fibonacci = {
+//     *[Symbol.iterator]() {
+//         let pre = 0, cur = 1;
+//         while (true) {
+//             [ pre, cur ] = [ cur, pre + cur ];
+//             yield cur;
+//         }
+//     }
+// };
+//
+// for (let n of fibonacci) {
+//     if (n > 1000)
+//         break;
+//     console.log(n)
+// }
 
-let fibonacci = {
-    *[Symbol.iterator]() {
-        let pre = 0, cur = 1;
-        while (true) {
-            [ pre, cur ] = [ cur, pre + cur ];
-            yield cur;
-        }
+class Sale {
+    constructor(price) {
+        this.price = price || 100;
     }
+
+    getPrice() {
+        return this.price;
+    };
+
+    decorate(decorator) {
+        return Object.create(this, {
+            getPrice: {
+                value: this.constructor.decorators[decorator]['getPrice']
+            }
+        });
+    };
+}
+
+Sale.decorators = {
+    fedtax: {
+        getPrice: function () {
+            return Object.getPrototypeOf(this).getPrice() * 1.05;
+        }
+    },
+    quebec: {
+        getPrice: function () {
+            return Object.getPrototypeOf(this).getPrice() * 1.075;
+        }
+    },
+    money: {
+        getPrice: function () {
+            console.log(this);
+            return `$ ${Object.getPrototypeOf(this).getPrice().toFixed(2)}`;
+        }
+    },
+    // cdn: {
+    //     getPrice: function () {
+    //         return `CDN$ ${Object.getPrototypeOf(this).getPrice().toFixed(2)}`;
+    //     }
+    // }
 };
 
-for (let n of fibonacci) {
-    if (n > 1000)
-        break;
-    console.log(n)
-}
+let sale = new Sale(100); // цена 100 долларов
+sale = sale.decorate(`fedtax`); // добавить федеральный налог
+sale = sale.decorate(`quebec`); // добавить местный налог
+sale = sale.decorate(`money`); // форматировать как денежную сумму
+console.log(sale.getPrice());
