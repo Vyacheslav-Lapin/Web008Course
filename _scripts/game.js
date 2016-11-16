@@ -36,9 +36,9 @@ const mediator = {
         const players = this.players;
         players.home = new Player(`Home`);
         players.guest = new Player(`Guest`);
-        addEventListener('keypress', this.keypress, true);
+        addEventListener('keyPress', this.keypress, true);
         setTimeout(() => {
-            removeEventListener('keypress', this.keypress, true);
+            removeEventListener('keyPress', this.keypress, true);
             alert(`Game over!`);
         }, 10000); // Игра завершится через 10 секунд
     },
