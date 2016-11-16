@@ -18,6 +18,15 @@
 
 <!--<script src="_scripts/game.js"></script>-->
 <!--<script src="_scripts/observer.js"></script>-->
-<script src="_scripts/observer2.js"></script>
+<!--<script src="_scripts/observer2.js"></script>-->
+<script>
+    const oldNode = document.getElementById(`result`),
+    clone = oldNode.cloneNode(true);
+
+    // выполнить операции над копией...
+
+    // когда копия будет готова:
+    oldNode.parentNode.replaceChild(clone, oldNode);
+</script>
 </body>
 </html>
