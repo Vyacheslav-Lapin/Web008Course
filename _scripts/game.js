@@ -37,10 +37,10 @@ const mediator = {
         players.home = new Player(`Home`);
         players.guest = new Player(`Guest`);
         addEventListener('keypress', this.keypress, true);
-        setTimeout(() => { // Игра завершится через 30 секунд
-            removeEventListener('keypress', mediator.keypress, true);
+        setTimeout(() => {
+            removeEventListener('keypress', this.keypress, true);
             alert(`Game over!`);
-        }, 3000);
+        }, 10000); // Игра завершится через 10 секунд
     },
 
     // обновляет счет, если кто-то из игроков сделал ход
@@ -55,12 +55,13 @@ const mediator = {
 
     // обработчик действий пользователя
     keypress: function (e) {
-        if (e.which === 49) // key “1”
-            mediator.players.home.play();
-        else if (e.which === 48) // key “0”
-            mediator.players.guest.play();
+        const keyCode = e.which,
+            userName = keyCode === 49 ? `home` : // key “1”
+                keyCode === 48 ? `guest` : // key “0”
+                    undefined;
+        if (userName)
+            mediator.players[userName].play();
     }
 };
 
-// Старт!
-mediator.setup();
+mediator.setup(); // Старт!
