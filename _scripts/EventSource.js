@@ -141,7 +141,7 @@ const EventSource = (() => {
 
 
 //Test
-let event1Call = EventSource.setAddEvent(window).addEventType('event1'),
+const event1Call = EventSource.setAddEvent(window).addEventType('event1'),
     event1Listener1 = window.addEventListener('event1', () => console.log('Событие 1 произошло! (обработчик всплытия)')),
     event1Listener2 = window.addEventListener('event1', () => console.log('Событие 1 произошло! (2-й обработчик всплытия)'), false);
 window.addEventListener('event1', () => console.log('Событие 1 произошло! (обработчик погружения)'), true);
