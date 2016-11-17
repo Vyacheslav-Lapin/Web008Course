@@ -25,8 +25,8 @@ const EventSource = (() => {
          * @param {Array<string>} name имя события (которое потом нужно будет передавать первым параметром - type - в
          * метод <code>addEventListener</code>).
          *
-         * @returns function(string,boolean=false) функция, которую нужно вызывать в ответ на событие, передавая ей при
-         * вызове объект события. Функция будет вызывать все слушатели по порядку, передавая им этот объект.
+         * @returns function(Event) функция, которую нужно вызывать в ответ на событие, передавая ей при вызове объект
+         * события. Функция будет вызывать все слушатели по порядку, передавая им этот объект.
          */
         addEventType(name) {
 
@@ -41,7 +41,7 @@ const EventSource = (() => {
                 false: [],
             };
 
-            return (event) => {
+            return event => {
 
                 if (!(name in this[EVENTS]))
                     throw new Error(`Событие '${name}' для данного объекта не определено!`);
@@ -67,9 +67,9 @@ const EventSource = (() => {
 
         /**
          * Добавляет к объекту слушателя события, ранее созданного при помощи вызова метода
-         * <code>{@link #addEvent}</code>. Если метод <code>addEventListener</code> у объекта уже есть, данный метод
+         * <code>{@link #addEventType}</code>. Если метод <code>addEventListener</code> у объекта уже есть, данный метод
          * выступает в качестве его Proxy, вызывая его для событий, которые не были созданы при помощи вызова метода
-         * <code>{@link #addEvent}</code>.
+         * <code>{@link #addEventType}</code>.
          * @param {string} eventType Имя события объекта
          * @param {function(Event)} handler Обработчик события
          * @param {boolean} [isPropagation=false]
@@ -126,7 +126,9 @@ const EventSource = (() => {
          * <code><em>that</em></code>.
          */
         static setAddEvent(that) {
-            return Object.assign(Object.assign(that, new EventSource(that)), // EventSource.prototype);
+            return Object.assign(
+                Object.assign(that, new EventSource(that)),
+                // EventSource.prototype);
                 {
                     addEventType: EventSource.prototype.addEventType,
                     removeEventType: EventSource.prototype.removeEventType,
@@ -155,3 +157,5 @@ try {
 } catch (/** @type Error */ e) {
     console.error(e.message);
 }
+
+Object.
