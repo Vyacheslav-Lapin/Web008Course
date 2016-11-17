@@ -157,5 +157,3 @@ try {
 } catch (/** @type Error */ e) {
     console.error(e.message);
 }
-
-Object.
