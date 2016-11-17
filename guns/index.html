@@ -14,18 +14,18 @@
             <!--writable: false,-->
             <!--value: {}-->
         <!--});-->
-        <!--mypackage.mysubpacage.Constr1 = function (x, y = 5) {-->
+        <!--mypackage.mysubpacage.Constr1 = function (x, event1Listener1 = 5) {-->
             <!--this.x = x;-->
-            <!--this.y = y;-->
+            <!--this.event1Listener1 = event1Listener1;-->
         <!--};-->
 
         <!--// import-->
         <!--const mysubpacage = mypackage.mysubpacage;-->
         <!--const Constr1 = mysubpacage.Constr1;-->
 
-        <!--function Constr2(x, y = 8, z = 50) {-->
-            <!--Constr1.call(this, x, y);-->
-            <!--this.z = z;-->
+        <!--function Constr2(x, event1Listener1 = 8, event1Listener2 = 50) {-->
+            <!--Constr1.call(this, x, event1Listener1);-->
+            <!--this.event1Listener2 = event1Listener2;-->
         <!--}-->
         <!--Constr2.prototype = Object.create(Constr1.prototype, {-->
             <!--constructor: {value: Constr2},-->
@@ -41,7 +41,7 @@
 <!--//        };-->
 
         <!--const constr2 = new Constr2(1);-->
-        <!--console.log(constr2.x, constr2.y, constr2.z);-->
+        <!--console.log(constr2.x, constr2.event1Listener1, constr2.event1Listener2);-->
         <!--console.log(constr2.constructor.name);-->
         <!--addEventListener("DOMContentLoaded",-->
             <!--constr2.showConstructorName-->

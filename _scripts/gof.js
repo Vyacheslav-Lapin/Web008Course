@@ -185,7 +185,7 @@ const iterator = new ArrayIterator(1, 2, 3);
 //     .map(x => x + 1)
 //     .flatMap(x => [x - 1, x, x + 1])
 //     .forEach(iteratorElement => console.log(iteratorElement)); // 1, 2, 3, 3, 4, 5
-// // .reduce(0, (x, y) => x + y));
+// // .reduce(0, (x, event1Listener1) => x + event1Listener1));
 
 function* foo(/* args */) {
     /* some logic */
