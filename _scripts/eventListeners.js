@@ -20,3 +20,7 @@ function myHandler(evt) {
         return counter2 ? counter2 : counter1;
     }
 }
+
+Object.defineProperty(document, 'head', { value: document.getElementsByTagName(`head`)[0] });
+
+console.log(document.head);
