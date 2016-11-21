@@ -20,7 +20,18 @@
   },
   "homepage": "https://github.com/Vyacheslav-Lapin/Web008Course#readme",
   "devDependencies": {
-    "google-closure-compiler": "^20161024.3.0"
+    "connect": "^3.5.0",
+    "google-closure-compiler": "^20161024.3.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^2.0.0",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-myth": "^1.1.0",
+    "gulp-stylus": "^2.6.0",
+    "gulp-uglify": "^2.0.0"
   },
   "dependencies": {
     "karma-chrome-launcher": "^2.0.0",
