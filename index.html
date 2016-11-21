@@ -4,8 +4,20 @@
     <meta charset="UTF-8">
     <title>Web-008 Example page</title>
     <link rel="stylesheet" href="_styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine.css">
     <!--<script src="_scripts/Server.js"></script>-->
     <!--<script src="_scripts/script.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/boot.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine-html.js"></script>-->
+    <script src="_scripts/jasmine.js"></script>
+    <script type="text/javascript">
+        var jasmineEnv = jasmine.getEnv();
+        jasmineEnv.specFilter = function(spec) {
+            console.log(spec);
+        };
+        window.onload = function() {jasmineEnv.execute();};
+    </script>
+    <script type="text/javascript" src="_scripts/tests.js"></script>
 </head>
 <body>
 
@@ -28,7 +40,9 @@
 <!--<script src="_scripts/observer.js"></script>-->
 <!--<script src="_scripts/observer2.js"></script>-->
 <!--<script src="_scripts/EventSource.js"></script>-->
-<script src="_scripts/eventListeners.js"></script>
+<!--<script src="_scripts/eventListeners.js"></script>-->
 <!--<script src="_scripts/webWorkers.js"></script>-->
+<!--<script src="_scripts/greeter.js"></script>-->
+
 </body>
 </html>

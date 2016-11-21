@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Vyacheslav-Lapin/Web008Course/issues"
   },
-  "homepage": "https://github.com/Vyacheslav-Lapin/Web008Course#readme"
+  "homepage": "https://github.com/Vyacheslav-Lapin/Web008Course#readme",
+  "devDependencies": {
+    "google-closure-compiler": "^20161024.3.0"
+  }
 }
